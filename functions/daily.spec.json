@@ -1,4 +1,5 @@
 {
+  "title": "Daily Number of New Cases",
     "$schema": "https://vega.github.io/schema/vega/v3.0.json",
     "width": 500,
     "height": 200,
@@ -43,8 +44,8 @@
     ],
   
     "axes": [
-      {"orient": "bottom", "scale": "x", "zindex": 1},
-      {"orient": "left", "scale": "y", "zindex": 1}
+      {"orient": "bottom", "scale": "x", "zindex": 1, "labelOverlap":"parity", "title": "Days since Case 100"},
+      {"orient": "left", "scale": "y", "zindex": 1, "title": "Number of cases"}
     ],
   
     "marks": [
