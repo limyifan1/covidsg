@@ -1,7 +1,6 @@
 const functions = require('firebase-functions');
 const express = require('express');
 const cors = require('cors');
-const fetch = require('cross-fetch');
 const getStatus = require('./status');
 
 // give us the possibility of manage request properly
@@ -12,11 +11,6 @@ app.use(cors({ origin: true }))
 
 // our single entry point for every message
 app.post('/', async (req, res) => {
-    /*
-        You can put the logic you want here
-        the message receive will be in this
-        https://core.telegram.org/bots/api#update
-    */
     const isTelegramMessage = req.body
                             && req.body.message
                             && req.body.message.chat
@@ -38,7 +32,7 @@ app.post('/', async (req, res) => {
                     '/about'
 
         if (req.body.message.text === '/status'){
-            reply = getStatus()
+            reply = await getStatus()
         }
         else if (req.body.message.text === '/trend'){
             reply = 'Feature still under development'
@@ -46,7 +40,6 @@ app.post('/', async (req, res) => {
         else if (req.body.message.text === '/news'){
             reply = 'Feature still under development'
         }
-
         else if (req.body.message.text === '/about'){
             reply = 'This bot was developed by a Singaporean to help Singapore '+
             'in it\'s COVID-19 efforts. Feel free to share if you find this useful. - LYF '

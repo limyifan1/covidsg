@@ -1,3 +1,5 @@
+const fetch = require('cross-fetch');
+
 async function getData(params) {
     return fetch('https://spreadsheets.google.com/feeds/list/1lwnfa-GlNRykWBL5y7tWpLxDoCfs8BvzWxFjeOZ1YJk/2/public/values?alt=json')
     .then((response) => {
