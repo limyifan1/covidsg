@@ -10,7 +10,9 @@ async function getData(params) {
     })
 }
 
-async function getStatus(){
+async function getStatus(req, res){
+    const { first_name } = req.body.message.from
+    const chat_id = req.body.message.chat.id
     let data = await getData()
     data = data.feed.entry[0]
     let date = new Date(data.updated.$t)
@@ -26,7 +28,12 @@ async function getStatus(){
     '&#128128; <b>Deceased: </b>' + data.gsx$deceased.$t + '\n' +
     '&#127976; <b>Still in hospital: </b>' + data.gsx$stillinhospital.$t + '\n' +
     '&#127968; <b>In isolation: </b>' + data.gsx$inisolation.$t + '\n'
-    return status
+    return res.status(200).send({
+        method: 'sendMessage',
+        parse_mode: 'HTML',
+        chat_id,
+        text: status
+        })
 }
 
 

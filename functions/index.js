@@ -2,6 +2,7 @@ const functions = require('firebase-functions');
 const express = require('express');
 const cors = require('cors');
 const getStatus = require('./status');
+const getTrend = require('./trend');
 
 // give us the possibility of manage request properly
 const app = express()
@@ -31,16 +32,19 @@ app.post('/', async (req, res) => {
                     '/fakenews (under development) \n' +
                     '/about'
 
-        if (req.body.message.text === '/status'){
-            reply = await getStatus()
+        if (req.body.message.text === '/status' || req.body.message.text === '/status@SGCovidBot'){
+            return await getStatus(req, res)
         }
-        else if (req.body.message.text === '/trend'){
+        else if (req.body.message.text === '/trend' || req.body.message.text === '/trend@SGCovidBot'){
+            return await getTrend(req, res)
+        }
+        else if (req.body.message.text === '/news' || req.body.message.text === '/news@SGCovidBot'){
             reply = 'Feature still under development'
         }
-        else if (req.body.message.text === '/news'){
+        else if (req.body.message.text === '/fakenews' || req.body.message.text === '/fakenews@SGCovidBot'){
             reply = 'Feature still under development'
         }
-        else if (req.body.message.text === '/about'){
+        else if (req.body.message.text === '/about' || req.body.message.text === '/about@SGCovidBot'){
             reply = 'This bot was developed by a Singaporean to help Singapore '+
             'in it\'s COVID-19 efforts. Feel free to share if you find this useful. - LYF '
         }
@@ -57,3 +61,4 @@ app.post('/', async (req, res) => {
 })
 // this is the only function it will be published in firebase
 exports.router = functions.https.onRequest(app)
+
